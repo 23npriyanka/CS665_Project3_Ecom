@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <i class="bi bi-cart-plus"></i> New Order
+        <small class="ms-2 opacity-75">— uses a SQL transaction to create order + items atomically</small>
+      </div>
+      <div class="card-body">
+        <form method="POST" id="orderForm">
+          <div class="mb-3">
+            <label class="form-label">Customer <span class="text-danger">*</span></label>
+            <select name="customer_id" class="form-select" required>
+              <option value="">— Select Customer —</option>
+              {% for c in customers %}
+              <option value="{{ c.customer_id }}">{{ c.name }} ({{ c.email }})</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <hr>
+          <h6 class="text-muted">Order Items <span class="text-danger">*</span></h6>
+
+          <div id="itemsContainer">
+            <div class="row g-2 mb-2 item-row">
+              <div class="col-7">
+                <select name="product_id[]" class="form-select" required>
+                  <option value="">— Select Product —</option>
+                  {% for p in products %}
+                  <option value="{{ p.product_id }}">{{ p.product_name }} — ${{ "%.2f"|format(p.price) }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-3">
+                <input type="number" name="quantity[]" class="form-control" min="1" value="1"
+                       placeholder="Qty" required>
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn btn-outline-danger w-100 remove-row" disabled>
+                  <i class="bi bi-dash-circle"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" id="addItem" class="btn btn-outline-secondary btn-sm mb-3">
+            <i class="bi bi-plus"></i> Add Another Item
+          </button>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-check-circle"></i> Place Order (Transaction)
+            </button>
+            <a href="{{ url_for('orders') }}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const productsHTML = `{% for p in products %}<option value="{{ p.product_id }}">{{ p.product_name }} — ${{ "%.2f"|format(p.price) }}</option>{% endfor %}`;
+
+document.getElementById('addItem').addEventListener('click', () => {
+  const container = document.getElementById('itemsContainer');
+  const row = document.createElement('div');
+  row.className = 'row g-2 mb-2 item-row';
+  row.innerHTML = `
+    <div class="col-7">
+      <select name="product_id[]" class="form-select" required>
+        <option value="">— Select Product —</option>
+        ${productsHTML}
+      </select>
+    </div>
+    <div class="col-3">
+      <input type="number" name="quantity[]" class="form-control" min="1" value="1" placeholder="Qty" required>
+    </div>
+    <div class="col-2">
+      <button type="button" class="btn btn-outline-danger w-100 remove-row">
+        <i class="bi bi-dash-circle"></i>
+      </button>
+    </div>`;
+  container.appendChild(row);
+  updateRemoveButtons();
+});
+
+document.getElementById('itemsContainer').addEventListener('click', (e) => {
+  if (e.target.closest('.remove-row')) {
+    e.target.closest('.item-row').remove();
+    updateRemoveButtons();
+  }
+});
+
+function updateRemoveButtons() {
+  const rows = document.querySelectorAll('.item-row');
+  rows.forEach((r, i) => {
+    r.querySelector('.remove-row').disabled = rows.length === 1;
+  });
+}
+</script>
+{% endblock %}

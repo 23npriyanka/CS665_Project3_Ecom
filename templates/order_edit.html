@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <i class="bi bi-pencil"></i> Edit Order #{{ order.order_id }}
+      </div>
+      <div class="card-body">
+        <p><strong>Customer:</strong> {{ order.customer.name }}</p>
+        <p><strong>Date:</strong> {{ order.order_date }}</p>
+        <p><strong>Items:</strong></p>
+        <ul class="small text-muted">
+          {% for item in order.items %}
+          <li>{{ item.product.product_name }} × {{ item.quantity }} — ${{ "%.2f"|format(item.total_price) }}</li>
+          {% endfor %}
+        </ul>
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Update Status</label>
+            <select name="status" class="form-select" required>
+              {% for s in ['pending', 'shipped', 'delivered', 'cancelled'] %}
+              <option value="{{ s }}" {% if order.status == s %}selected{% endif %}>{{ s|capitalize }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-check-circle"></i> Update
+            </button>
+            <a href="{{ url_for('orders') }}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex align-items-center gap-3 mb-3">
+  <a href="{{ url_for('customers') }}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left"></i> Back
+  </a>
+  <h2 class="mb-0"><i class="bi bi-cart3"></i> Orders for {{ customer.name }}</h2>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-header">Customer Details</div>
+  <div class="card-body">
+    <p class="mb-1"><strong>Email:</strong> {{ customer.email }}</p>
+    <p class="mb-0"><strong>Member Since:</strong> {{ customer.created_at }}</p>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-header bg-dark text-white">Order History ({{ customer.orders|length }} orders)</div>
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0">
+      <thead class="table-light">
+        <tr><th>Order #</th><th>Date</th><th>Status</th><th>Items</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        {% for o in customer.orders %}
+        <tr>
+          <td>#{{ o.order_id }}</td>
+          <td>{{ o.order_date }}</td>
+          <td>
+            {% if o.status == 'shipped' %}
+              <span class="badge bg-primary">{{ o.status }}</span>
+            {% elif o.status == 'delivered' %}
+              <span class="badge bg-success">{{ o.status }}</span>
+            {% elif o.status == 'pending' %}
+              <span class="badge bg-warning text-dark">{{ o.status }}</span>
+            {% elif o.status == 'cancelled' %}
+              <span class="badge bg-danger">{{ o.status }}</span>
+            {% else %}
+              <span class="badge bg-secondary">{{ o.status }}</span>
+            {% endif %}
+          </td>
+          <td>{{ o.items|length }}</td>
+          <td>
+            ${{ "%.2f"|format(o.items|sum(attribute='total_price') or 0) }}
+          </td>
+        </tr>
+        {% for item in o.items %}
+        <tr class="table-light">
+          <td class="ps-4 text-muted small" colspan="2">&nbsp;&nbsp;&nbsp;↳ {{ item.product.product_name }}</td>
+          <td class="text-muted small">qty: {{ item.quantity }}</td>
+          <td class="text-muted small" colspan="2">${{ "%.2f"|format(item.total_price) }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr><td colspan="5" class="text-center text-muted py-3">No orders found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

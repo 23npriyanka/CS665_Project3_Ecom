@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <i class="bi bi-person-badge"></i> {{ action }} Seller
+      </div>
+      <div class="card-body">
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Seller Name <span class="text-danger">*</span></label>
+            <input type="text" name="seller_name" class="form-control"
+                   value="{{ seller.seller_name if seller else '' }}" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Source</label>
+            <select name="source" class="form-select">
+              <option value="">— Select Source —</option>
+              {% for opt in ['import', 'manual', 'api', 'referral'] %}
+              <option value="{{ opt }}"
+                {% if seller and seller.source == opt %}selected{% endif %}>
+                {{ opt|capitalize }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-check-circle"></i> Save
+            </button>
+            <a href="{{ url_for('sellers') }}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
