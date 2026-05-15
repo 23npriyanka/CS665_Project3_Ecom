@@ -1,10 +1,20 @@
 # AI Assistance Log — CS665 Project 3
 
-This file documents every instance of Generative AI assistance used in this project, per course policy.
-
----
-
 ## Entry 1
+
+**Tool:** Claude
+**Promt:**"I need Part 2  complete instructions how to do and all with clear instructions and answers"
+
+**AI Output Summary:**
+The AI generated all the requirements to needed for the project
+
+
+## Entry 2
+**Promt:**"What and all do i need to setup for the project"
+**AI Output Summary:**
+The AI provided me what and all do i need to setup and version of all softwares.
+
+## Entry 3
 
 **Tool:** Claude (Anthropic, claude.ai)
 
@@ -23,7 +33,7 @@ The AI generated a `database.py` with SQLAlchemy model classes using `db.relatio
 
 ---
 
-## Entry 2
+## Entry 4
 
 **Tool:** Claude (Anthropic, claude.ai)
 
@@ -41,7 +51,7 @@ The AI generated a `base.html` with a navbar using `navbar-dark bg-dark`, a coll
 
 ---
 
-## Entry 3
+## Entry 5
 
 **Tool:** Claude (Anthropic, claude.ai)
 
@@ -59,7 +69,7 @@ The AI generated a structured normalization report covering 1NF, 2NF, 3NF with a
 
 ---
 
-## Entry 4
+## Entry 6
 
 **Tool:** Claude (Anthropic, claude.ai)
 
@@ -75,6 +85,13 @@ The AI generated a dashboard route using `func.count`, `func.sum`, `func.avg` fr
 - Added color-coded status badges in the orders-by-status table
 - Changed card layout from 3-column to 2-row responsive grid
 
----
+## Entry 7
+**Tool:** Claude
+
+**Prompt:** "Can u give me how can i start with git and how can i do commits in incremental format"
+
+**AI Output Summary:**
+Ai gave me the steps how can start with adding new repository and how to commit each file into the git
 
 
+*All AI-generated code was reviewed, tested, and modified before inclusion in this repository.*
