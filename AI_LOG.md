@@ -8,11 +8,17 @@
 **AI Output Summary:**
 The AI generated all the requirements to needed for the project
 
+**My Modification**
+I got to know what i need to do so started with the project.
+
 
 ## Entry 2
 **Promt:**"What and all do i need to setup for the project"
 **AI Output Summary:**
 The AI provided me what and all do i need to setup and version of all softwares.
+**My Modification**
+I installed what and all i needed to the project and started with the each part frontend backend and database files.
+
 
 ## Entry 3
 
@@ -92,6 +98,10 @@ The AI generated a dashboard route using `func.count`, `func.sum`, `func.avg` fr
 
 **AI Output Summary:**
 Ai gave me the steps how can start with adding new repository and how to commit each file into the git
+
+**My Modification**
+Started with commit my codes into the repository.
+
 
 
 *All AI-generated code was reviewed, tested, and modified before inclusion in this repository.*
